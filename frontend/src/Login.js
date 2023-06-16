@@ -1,10 +1,11 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+// import './style.css'
 
 function Login() {
   return (
-    <div className='d-flex justify-content-center align-items-center vh-100'>
-        <div className='bg-white p-3 rounded w-25'>
+    <div className='d-flex justify-content-center align-items-center vh-100 '>
+        <div className='bg-white p-3 rounded w-25 border'>
             <h2>Login</h2>
             <form>
                 <div className='mb-3'>
