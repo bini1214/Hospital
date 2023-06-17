@@ -1,3 +1,11 @@
-/* .loginPage{
-    background: url('Image/doctor ms.jpeg');
-} */
+.loginPage{
+    background: url('Images/doc2.jpg');
+    background: linear-gradient(rgba(11,11,11,),rgba(10,10,10)),url("Images/doc2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 120%;
+}  
+.loginForm{
+    background-color: rgba(1,32,93,0.6);
+    color: white;
+}

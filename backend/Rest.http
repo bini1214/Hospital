@@ -1,0 +1,21 @@
+###
+POST http://localhost:8081/create
+Content-Type: application/json
+
+{
+    "doctID":"123",
+    "fname":"sanchot",
+    "lname":"getcho",
+    "address":"addis",
+    "dept_name":"software",
+    "salary":0,
+    "email":"getnetadugna25@gmail.com",
+    "password":"fuck u"
+}
+
+###
+GET  http://localhost:8081/
+
+Content-Type: application/json
+
+
