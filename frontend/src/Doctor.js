@@ -34,7 +34,11 @@ window.location.reload(true);
     alert("Error");
   }
 })
-.catch(err=>console.log(err));
+.catch(err=>{
+  console.log("------------An error has occurred >>>>");
+  
+  
+  console.log(err)});
   }
 //----------------------------------|----------
   return (

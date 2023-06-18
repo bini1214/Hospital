@@ -12,6 +12,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:3000',
+methods:["POST","GET","PUT","DELETE"],
+
   credentials: true
 }));
 
@@ -31,9 +33,7 @@ con.connect(function(err) {
   }
 });
 
-app.get("/", (req, res) => {
-  res.json({"name": "Genet"});
-});
+
 
 //Create API to select admin 
 app.post('/login', (req, res) => {
@@ -57,6 +57,14 @@ app.post('/login', (req, res) => {
     }
   });
 });
+
+//API for logout
+app.get('/logout',(req,res)=>{
+
+  res.clearCookie('token');
+  return res.json({Status:"Success"});
+})
+
 
 
 const verifyUser=(req,res,next)=>{
@@ -128,6 +136,55 @@ app.get('/getDoctor',(req,res)=>{
   })
 
 
+//api for selecting and total number of ADMIN
+app.get('/adminCount',(req,res)=>{
+  const sql="select count(ad_id) as admine from admin"
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"Error in running query"});
+    return res.json(result);
+  })
+})
+
+//api for selecting and total number of DOCTOR
+
+app.get('doctorCount',(req,res)=>{
+  const sql="select count(doctID) as doctor from doctor"
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"Error in running query"});
+    return res.json(result);
+  })
+})
+
+//api for selecting and total number of NURSE
+
+app.get('nurseCount',(req,res)=>{
+  const sql="select count(nr_id) nurse from nurse"
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"Error in running query"});
+    return res.json(result);
+  })
+})
+
+//api for selecting and total number of TRIGE
+
+app.get('triageCount',(req,res)=>{
+  const sql="select count(tr_id) as triage from triage"
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"Error in running query"});
+    return res.json(result);
+  })
+})
+
+
+//api for selecting and total number of RECEPTION
+
+app.get('receptionCount',(req,res)=>{
+  const sql="select count(rec_id) as reception from reception"
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"Error in running query"});
+    return res.json(result);
+  })
+})
 
 
 

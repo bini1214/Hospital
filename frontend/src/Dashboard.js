@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+ 
 function Dashboard() {
-  const navigate=useNavigate()
+  const navigate=useNavigate() 
   axios.defaults.withCredentials=true;
+ 
 useEffect(()=>{
-axios.get('/dashboard')
+
+  
+axios.get('http://localhost:8081/dashboard')
 .then(res=>{
   if(res.data.Status==="Success")
   {
@@ -16,9 +19,18 @@ axios.get('/dashboard')
   else{
     navigate('/login')
   }
-})
+})}
 
-},[])
+,[])
+
+const handleLogout=()=>{
+  axios.get('http://localhost:8081/logout') 
+  .then(res=>{
+    navigate('/')
+  })
+  .catch(err=>console.log(err));
+
+} 
 
   return (
     <div className="container-fluid">
@@ -69,7 +81,8 @@ axios.get('/dashboard')
                   <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Profile</span>
                 </Link>
               </li>
-              <li>
+              <li li onClick={handleLogout}>
+               
                 <a href="#" className="nav-link px-0 align-middle text-white">
                   <i className="fs-4 bi-power"></i> <span className="ms-1 d-none d-sm-inline">Logout</span>
                 </a>

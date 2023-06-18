@@ -1,15 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 function Home() {
+  const [adminCount, setAdminCount] = useState(null);
+  const [doctorCount, setDoctorCount] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://localhost:8081/adminCount')
+      .then(res => {
+       setAdminCount(res.data[0].admine)
+      })
+      .catch(err => console.log(err));
+
+      axios.get('http://localhost:8081/doctorCount')
+      .then(res => {
+       setDoctorCount(res.data[0].doctor)
+      })
+      .catch(err => console.log(err));
+
+
+  }, []);
+  
+
   return (
     <div>
     <div className='p-3 d-flex justify-content-around'>
       <div className='px-3 pt-2 pb-3 border shadow-sm w-25'> 
       <div className='text-center pb-1'> 
+      
 
       <p>Admin</p>
       <hr/>
-      <p>Total:{}</p>
+      <p>Total:{adminCount}</p>
+      <Link to={'/login'} className='btn btn-primary btn-sm me-2'>edit</Link>
+
       </div>
       </div>
 
@@ -19,7 +45,8 @@ function Home() {
 
       <p>Doctor</p>
       <hr/>
-      <p>Total:{}</p>
+      <p>Total:{doctorCount}</p>
+      <Link to={'/login'} className='btn btn-primary btn-sm me-2'>edit</Link>
       </div>
       </div>
       <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
@@ -28,6 +55,7 @@ function Home() {
       <p>Nurse</p>
       <hr/>
       <p>Total:{}</p>
+      <Link to={'/login'} className='btn btn-primary btn-sm me-2'>edit</Link>
       </div>
       </div>
       <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
@@ -36,6 +64,7 @@ function Home() {
       <p>Triage</p>
       <hr/>
       <p>Total:{}</p>
+      <Link to={'/login'} className='btn btn-primary btn-sm me-2'>edit</Link>
       </div>
       </div>
       <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
@@ -44,6 +73,7 @@ function Home() {
       <p>Reception</p>
       <hr/>
       <p>Total:{}</p>
+      <Link to={'/login'} className='btn btn-primary btn-sm me-2'>edit</Link>
       </div>
       </div> 
 
@@ -62,7 +92,9 @@ function Home() {
 
         </tbody>
       </table>
+      
       </div>
+      
     </div>
   )
 }

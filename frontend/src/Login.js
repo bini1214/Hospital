@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useNavigate } from 'react-router-dom'
 
 function Login() { 
+    
     const [values,setValues]=useState({
         email:'',
         password:''
@@ -23,7 +24,7 @@ const handleSubmit=(event) =>{
         {
         if(res.data.Status==='Success')
         {
-           navigate('/');
+           navigate('/doctor');
         }    
         else{
             setError(res.data.Error);
@@ -54,6 +55,7 @@ const handleSubmit=(event) =>{
                     <input type='password' placeholder='Enter Password' name='password'
                        onChange={e=>setValues({...values,password: e.target.value})} className='form-control rounded-0'/>
                 </div>
+
                 <button type='submit' className='btn btn-success w-100 rounded-0' >Log in</button>
                 <p>you must be an authorized person</p>
                
