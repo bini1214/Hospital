@@ -3,19 +3,40 @@ POST http://localhost:8081/create
 Content-Type: application/json
 
 {
-    "doctID":"123",
-    "fname":"sanchot",
-    "lname":"getcho",
-    "address":"addis",
-    "dept_name":"software",
-    "salary":0,
-    "email":"getnetadugna25@gmail.com",
-    "password":"fuck u"
+    "doctID": "123",
+    "fname": "sanchot",
+    "lname": "getcho",
+    "address": "addis",
+    "dept_name": "software",
+    "salary": 0,
+    "email": "getnetadugna25@gmail.com",
+    "password": "fuck u"
+}
+
+
+###
+GET  http://localhost:8081/getDoctor
+
+Content-Type: application/json
+{
+    
 }
 
 ###
-GET  http://localhost:8081/
-
+PUT http://localhost:8081/update/D1
 Content-Type: application/json
 
+{
+    "doctID": "123",
+    "fname": "sanchot",
+    "lname": "getcho",
+    "address": "addis",
+    "dept_name": "software",
+    "salary": 14
+}
 
+# ###
+# PUT http://localhost:8081/update/D1
+# Content-Type: application/x-www-form-urlencoded
+
+# doctID=123&fname=sanchot&lname=getcho&address=addis&dept_name=software&salary=0

@@ -8,10 +8,11 @@ import Doctor from './Doctor'
 import Reception from './Reception'
 import Triage from './Triage'
 import Nurse from './Nurse'
-import Home from './Home'
+import Home from './Home' 
 import Profiles from './Profiles';
 import Department from './Department'
 import AddDoctor from './AddDoctor';
+import EditDoctor from './EditDoctor'
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
           <Route path='/department' element={<Department/>}></Route>
           <Route path='/nurse' element={<Nurse/>}></Route>
           <Route path='/create' element={<AddDoctor/>}></Route>
+          <Route path='/doctorEdit/:id' element={<EditDoctor/>}></Route>
         </Route>
         <Route path="/login" element={<Login />} ></Route>
       </Routes>

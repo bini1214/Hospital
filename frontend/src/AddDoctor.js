@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import Doctor from './Doctor';
+import { useNavigate } from 'react-router-dom';
 // import multer from 
 
 function AddDoctor() {
@@ -14,6 +15,9 @@ const [data,setData]=useState({
     dept_name:'',
     salary:''
 })
+
+const navigate=useNavigate();
+
 const handleSubmit = async (event) => {
   event.preventDefault();
 
@@ -43,8 +47,11 @@ const handleSubmit = async (event) => {
       salary:data.salary,
       email:data.email,
       password:data.password
+
   
     });
+    navigate('/doctor');
+    
 
     
     console.log(res);
