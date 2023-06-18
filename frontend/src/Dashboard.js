@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Dashboard() {
+  const navigate=useNavigate()
+  axios.defaults.withCredentials=true;
+useEffect(()=>{
+axios.get('/dashboard')
+.then(res=>{
+  if(res.data.Status==="Success")
+  {
+
+  }
+  else{
+    navigate('/login')
+  }
+})
+
+},[])
+
   return (
     <div className="container-fluid">
       <div className="row flex-nowrap">

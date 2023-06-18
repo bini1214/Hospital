@@ -11,6 +11,8 @@ function Login() {
     })
     const navigate=useNavigate()
 
+    axios.defaults.withCredentials=true;
+
 const [error,setError]=useState('');
 
 
@@ -52,7 +54,7 @@ const handleSubmit=(event) =>{
                     <input type='password' placeholder='Enter Password' name='password'
                        onChange={e=>setValues({...values,password: e.target.value})} className='form-control rounded-0'/>
                 </div>
-                <button type='submit' className='btn btn-success w-100 rounded-0'>Log in</button>
+                <button type='submit' className='btn btn-success w-100 rounded-0' >Log in</button>
                 <p>you must be an authorized person</p>
                
 

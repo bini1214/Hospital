@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom';
-// import multer from 
 
 function EditDoctor() {
 const [data,setData]=useState({
@@ -13,7 +12,7 @@ const [data,setData]=useState({
     dept_name:'',
     salary:0
 })
-//console.log(data.fname);
+
 
 const navigate=useNavigate();
 const {id}=useParams();

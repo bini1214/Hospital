@@ -4,24 +4,39 @@ import { Link } from 'react-router-dom';
 
 function Doctor() {
   const [data, setData] = useState([]);
-
+ 
   useEffect(() => {
     axios.get('http://localhost:8081/getDoctor')
-      .then(res =>{
-
-        console.log("-------------------------");
-        console.log(res.data.Result)
-        if(res.data.Status==="Success"){
-          console.log(res.data.Result)
+      .then(res => {
+        if (res.data.Status === "Success") {
+          console.log(res.data.Result);
           setData(res.data.Result);
+        } else {
+          alert("Error");
         }
-        else{
-          alert("Error")
-        }
-      } ) 
-      .catch(err => { console.log(err);});
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
+  
 
+  //--------------------------------|-----------
+  const handleDelete=(id)=>{
+    axios.delete(`http://localhost:8081/delete/${id}`)
+.then(res=>{
+  if(res.data.Status==="Success")
+  {
+window.location.reload(true);
+  }
+  else{
+
+    alert("Error");
+  }
+})
+.catch(err=>console.log(err));
+  }
+//----------------------------------|----------
   return (
     <div className='px-5 py-3'>
       <div className='d-flex justify-content-center'>
@@ -42,7 +57,7 @@ function Doctor() {
           </tr>
         </thead>
         <tbody>
-          {/* Render the data here */}
+          {/* Render the data here */} 
 {
   data.map((doctor,index)=>{
 return <tr key={index}>
@@ -54,7 +69,7 @@ return <tr key={index}>
   <td>{doctor.salary}</td>
   <td>
     <Link to={`/doctorEdit/${doctor.doctID}`} className='btn btn-primary btn-sm me-2'>edit</Link>
-    <button className='btn btn-sm btn-danger'>delete</button>
+    <button onClick={e=>handleDelete(doctor.doctID)} className='btn btn-sm btn-danger'>delete</button>
   </td>
 
 </tr>

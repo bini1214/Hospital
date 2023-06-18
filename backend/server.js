@@ -1,14 +1,19 @@
 import express from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
+import Jwt  from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcrypt';
 
 
 const app = express();
-app.use(cors());
+
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
 // Create a connection with the database
 const con = mysql.createConnection({
@@ -32,18 +37,50 @@ app.get("/", (req, res) => {
 
 //Create API to select admin 
 app.post('/login', (req, res) => {
+  let values=[req.body.email, req.body.password];
+  console.log(values);
   const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-  con.query(sql, [req.body.email, req.body.password], (err, result) => {
+  
+  con.query(sql, values, (err, result) => {
     if (err) {
       return res.json({ Status: "Error", Error: "Error in running query" });
     }
     if (result.length > 0) {
+      const id = result[0].id;
+      const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '1d' });
+
+      res.cookie('token', token);
+
       return res.json({ Status: "Success" });
     } else {
       return res.json({ Status: "Error", Error: "Wrong Email or Password" });
     }
   });
 });
+
+
+const verifyUser=(req,res,next)=>{
+  //attention
+  const token=req.cookies.token;
+  //attention
+  if(!token){
+    return res.json({Error:"You are not Authenticated"});
+  }
+  else
+  {
+Jwt.verify(token,"jwt-secret-key",(err,decoded)=>{
+  if(err) return res.json({Error:"Token wrong"});
+  next();
+})
+  }
+}
+
+app.get('/dashboard',verifyUser,(req,res)=>{
+
+  return res.json({Status:"Success"})
+
+
+})
 
 
 
@@ -127,6 +164,34 @@ app.put('/update/:id', (req, res) => {
     
   }
 });
+
+
+//Api for deletion
+
+app.delete('/delete/:id',(req,res)=>{
+ 
+
+  try {
+    
+    
+ 
+  
+    let values=[req.params.id];
+    console.log(values);
+    const sql = "DELETE FROM doctor WHERE doctID=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete doctor error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+
+
+})
 
 
 

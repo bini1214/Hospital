@@ -40,3 +40,20 @@ Content-Type: application/json
 # Content-Type: application/x-www-form-urlencoded
 
 # doctID=123&fname=sanchot&lname=getcho&address=addis&dept_name=software&salary=0
+###
+GET  http://localhost:8081/get/hh
+
+Content-Type: application/json
+
+###
+DELETE  http://localhost:8081/delete/doctId
+Content-Type: application/json
+
+###
+POST http://localhost:8081/login
+Content-Type: application/json
+
+{
+ "email":"damisu@gmail.com",
+ "password": "a123"  
+}
