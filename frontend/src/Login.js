@@ -24,7 +24,7 @@ const handleSubmit=(event) =>{
         {
         if(res.data.Status==='Success')
         {
-           navigate('/doctor');
+           navigate('/dash');
         }    
         else{
             setError(res.data.Error);

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
 import Jwt  from 'jsonwebtoken';
@@ -47,7 +47,7 @@ app.post('/login', (req, res) => {
     }
     if (result.length > 0) {
       const id = result[0].id;
-      const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '1d' });
+      const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '7d' });
 
       res.cookie('token', token);
 
@@ -57,6 +57,147 @@ app.post('/login', (req, res) => {
     }
   });
 });
+
+
+//API for log in of doctor
+
+app.post('/doctorLogin', (req, res) => {
+  
+  const sql = "SELECT * FROM doctor WHERE email = ?";
+  
+  con.query(sql,[req.body.email], (err, result) => {
+    if (err) {
+      return res.json({ Status: "Error", Error: "Error in running query" });
+    }
+    if (result.length > 0) {
+      bcrypt.compare(req.body.password.toString(), result[0].password, (err, response) => {
+        if (err) {
+          return res.json({ Error: "password error" });
+        }
+        if (response) {
+          const id = result[0].id;
+          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '7d' });
+
+          res.cookie('token', token);
+
+          return res.json({ Status: "Success" });
+        } else {
+          return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+        }
+      });
+    } else {
+      return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+    }
+  });
+});
+
+
+//API for log in of nurse
+
+app.post('/nurseLogin', (req, res) => {
+  
+  const sql = "SELECT * FROM nurse WHERE email = ?";
+  
+  con.query(sql,[req.body.email], (err, result) => {
+
+    console.log(result);
+    if (err) {
+      return res.json({ Status: "Error", Error: "Error in running query" });
+    }
+    if (result.length > 0) {
+      bcrypt.compare(req.body.password.toString(), result[0].PASSWORD, (err, response) => {
+        if (err) {
+          return res.json({ Error: "password error" });
+        }
+        if (response) {
+          const id = result[0].id;
+          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '7d' });
+
+          res.cookie('token', token);
+
+          return res.json({ Status: "Success" });
+        } else {
+          return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+        }
+      });
+    } else {
+      return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+    }
+  });
+});
+
+
+
+//API for log in of triage
+
+app.post('/triageLogin', (req, res) => {
+  
+  const sql = "SELECT * FROM triage WHERE email = ?";
+  
+  con.query(sql,[req.body.email], (err, result) => {
+    if (err) {
+      return res.json({ Status: "Error", Error: "Error in running query" });
+    }
+    if (result.length > 0) {
+      bcrypt.compare(req.body.password.toString(), result[0].password, (err, response) => {
+        if (err) {
+          return res.json({ Error: "password error" });
+        }
+        if (response) {
+          const id = result[0].id;
+          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '1d' });
+
+          res.cookie('token', token);
+
+          return res.json({ Status: "Success" });
+        } else {
+          return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+        }
+      });
+    } else {
+      return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+    }
+  });
+});
+
+
+//API for log in of reception
+
+app.post('/receptionLogin', (req, res) => {
+  
+  const sql = "SELECT * FROM reception WHERE email = ?";
+  
+  con.query(sql,[req.body.email], (err, result) => {
+    if (err) {
+      return res.json({ Status: "Error", Error: "Error in running query" });
+    }
+    if (result.length > 0) {
+      bcrypt.compare(req.body.password.toString(), result[0].password, (err, response) => {
+        if (err) {
+          return res.json({ Error: "password error" });
+        }
+        if (response) {
+          const id = result[0].id;
+          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '1d' });
+
+          res.cookie('token', token);
+
+          return res.json({ Status: "Success" });
+        } else {
+          return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+        }
+      });
+    } else {
+      return res.json({ Status: "Error", Error: "Wrong Email or Password" });
+    }
+  });
+});
+
+
+
+
+
+
 
 //API for logout
 app.get('/logout',(req,res)=>{
@@ -136,6 +277,460 @@ app.get('/getDoctor',(req,res)=>{
   })
 
 
+
+//inserting department to table by admin
+app.post('/createe', async (req, res) => {
+  const sql = "INSERT INTO department (`dept_name`, `budget`, `building`) VALUES (?, ?, ?)";
+ 
+  //const saltRounds = 10; // Define the number of salt rounds
+
+  try {
+    //const salt = await bcrypt.genSalt(saltRounds);
+    //const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
+    const values = [
+      req.body.dept_name,
+      req.body.budget,
+      req.body.building,
+      
+    ];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in hashing password" });
+  }
+});
+
+app.get('/getDepartment',(req,res)=>{
+  const sql="SELECT*FROM department";
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"get department error in sql"});
+    return res.json({Status:"Success",Result:result});
+  
+  })
+  
+  })
+
+
+  //Api for deletion department
+
+app.delete('/delete/:id',(req,res)=>{
+ 
+
+  try {
+    
+    
+ 
+  
+    let values=[req.params.id];
+    console.log(values);
+    const sql = "DELETE FROM department WHERE dept_name=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete department error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+
+
+})
+
+//api for updating department
+app.get('/get/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM department WHERE dept_name=?";
+  con.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.json({ Error: "get department error in sql" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+app.put('/update/:id', (req, res) => {
+
+
+  try {
+    
+    const decimalBudget = parseFloat(req.body.budget);
+ 
+  
+    let values=[decimalBudget,req.params.id];
+    console.log(values);
+    const sql = "UPDATE department SET budget=? WHERE dept_name=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "update department error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+});
+
+
+
+//inserting nurse to table by admin
+app.post('/createNurse', async (req, res) => {
+  const sql = "INSERT INTO nurse (`nr_id`, `fname`, `lname`, `address`, `dept_name`, `salary`, `email`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+ 
+  const saltRounds = 10; // Define the number of salt rounds
+
+  try {
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
+    const values = [
+      req.body.nr_id,
+      req.body.fname,
+      req.body.lname,
+      req.body.address,
+      req.body.dept_name,
+      req.body.salary,
+      req.body.email,
+      hashedPassword
+    ];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in hashing password" });
+  }
+});
+
+app.get('/getNurse',(req,res)=>{
+  const sql="SELECT*FROM nurse";
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"get doctor error in sql"});
+    return res.json({Status:"Success",Result:result});
+  
+  })
+  
+  })
+
+
+
+
+//API for updating Nurse
+
+
+
+app.get('/get/nurse/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM nurse WHERE nr_id=?";
+  con.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.json({ Error: "get nurse error in sql" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+app.put('/update/nurse/:id', (req, res) => {
+
+
+  try {
+    
+    const decimalSalary = parseFloat(req.body.salary);
+ 
+  
+    let values=[decimalSalary,req.params.id];
+    console.log(values);
+    const sql = "UPDATE nurse SET salary=? WHERE nr_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "update nurse error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+});
+
+
+//Api for deletion of nurse by admin
+
+app.delete('/delete/nurse/:id',(req,res)=>{
+ 
+
+  try {
+    
+    
+ 
+  
+    let values=[req.params.id];
+    console.log(values);
+    const sql = "DELETE FROM nurse WHERE nr_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete nurse error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+
+
+})
+
+
+
+//inserting triage to table by admin
+app.post('/createTriage', async (req, res) => {
+  const sql = "INSERT INTO triage (`tr_id`, `fname`, `lname`, `address`,`salary`, `email`, `password`) VALUES (?, ?,?, ?, ?, ?, ?)";
+ 
+  const saltRounds = 10; // Define the number of salt rounds
+
+  try {
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
+    const values = [
+      req.body.tr_id,
+      req.body.fname,
+      req.body.lname,
+      req.body.address,
+      req.body.salary,
+      req.body.email,
+      hashedPassword
+    ];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in hashing password" });
+  }
+});
+
+app.get('/getTriage',(req,res)=>{
+  const sql="SELECT*FROM triage";
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"get triage error in sql"});
+    return res.json({Status:"Success",Result:result});
+  
+  })
+  
+  })
+
+
+
+
+
+
+//API for updating triage
+
+
+
+app.get('/get/triage/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM triage WHERE tr_id=?";
+  con.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.json({ Error: "get triage error in sql" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+app.put('/update/triage/:id', (req, res) => {
+
+
+  try {
+    
+    const decimalSalary = parseFloat(req.body.salary);
+ 
+  
+    let values=[decimalSalary,req.params.id];
+    console.log(values);
+    const sql = "UPDATE triage SET salary=? WHERE tr_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "update triage error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+});
+
+
+//Api for deletion of triage by admin
+
+app.delete('/delete/triage/:id',(req,res)=>{
+ 
+
+  try {
+    
+    
+ 
+  
+    let values=[req.params.id];
+    console.log(values);
+    const sql = "DELETE FROM triage WHERE tr_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete triage error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+
+
+})
+
+
+
+
+//inserting reception to table by admin
+app.post('/createReception', async (req, res) => {
+  const sql = "INSERT INTO reception (`re_id`, `fname`, `lname`, `address`,`salary`, `email`, `password`) VALUES (?, ?,?, ?, ?, ?, ?)";
+ 
+  const saltRounds = 10; // Define the number of salt rounds
+
+  try {
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    
+    const values = [
+      req.body.re_id,
+      req.body.fname,
+      req.body.lname,
+      req.body.address,
+      req.body.salary,
+      req.body.email,
+      hashedPassword
+    ];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in hashing password" });
+  }
+});
+
+app.get('/getReception',(req,res)=>{
+  const sql="SELECT*FROM reception";
+  con.query(sql,(err,result)=>{
+    if(err) return res.json({Error:"get reception error in sql"});
+    return res.json({Status:"Success",Result:result});
+  
+  })
+  
+  })
+
+
+
+
+
+
+//API for updating  reception
+
+
+
+app.get('/get/reception/:id', (req, res) => {
+  const id = req.params.id;
+  const sql = "SELECT * FROM reception WHERE re_id=?";
+  con.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.json({ Error: "get reception error in sql" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+app.put('/update/reception/:id', (req, res) => {
+
+
+  try {
+    
+    const decimalSalary = parseFloat(req.body.salary);
+ 
+  
+    let values=[decimalSalary,req.params.id];
+    console.log(values);
+    const sql = "UPDATE reception SET salary=? WHERE re_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "update reception error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  } 
+});
+
+
+//Api for deletion of triage by admin
+
+app.delete('/delete/reception/:id',(req,res)=>{
+ 
+
+  try {
+    
+    
+ 
+  
+    let values=[req.params.id];
+    console.log(values);
+    const sql = "DELETE FROM reception WHERE re_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete reception error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error)
+    
+  }
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
 //api for selecting and total number of ADMIN
 app.get('/adminCount',(req,res)=>{
   const sql="select count(ad_id) as admine from admin"
@@ -147,8 +742,8 @@ app.get('/adminCount',(req,res)=>{
 
 //api for selecting and total number of DOCTOR
 
-app.get('doctorCount',(req,res)=>{
-  const sql="select count(doctID) as doctor from doctor"
+app.get('/doctorCount',(req,res)=>{
+  const sql="select count(doctID) as doctore from doctor"
   con.query(sql,(err,result)=>{
     if(err) return res.json({Error:"Error in running query"});
     return res.json(result);
@@ -157,8 +752,8 @@ app.get('doctorCount',(req,res)=>{
 
 //api for selecting and total number of NURSE
 
-app.get('nurseCount',(req,res)=>{
-  const sql="select count(nr_id) nurse from nurse"
+app.get('/nurseCount',(req,res)=>{
+  const sql="select count(nr_id) as nursee from nurse"
   con.query(sql,(err,result)=>{
     if(err) return res.json({Error:"Error in running query"});
     return res.json(result);
@@ -167,8 +762,8 @@ app.get('nurseCount',(req,res)=>{
 
 //api for selecting and total number of TRIGE
 
-app.get('triageCount',(req,res)=>{
-  const sql="select count(tr_id) as triage from triage"
+app.get('/triageCount',(req,res)=>{
+  const sql="select count(tr_id) as triagee from triage"
   con.query(sql,(err,result)=>{
     if(err) return res.json({Error:"Error in running query"});
     return res.json(result);
@@ -178,8 +773,8 @@ app.get('triageCount',(req,res)=>{
 
 //api for selecting and total number of RECEPTION
 
-app.get('receptionCount',(req,res)=>{
-  const sql="select count(rec_id) as reception from reception"
+app.get('/receptionCount',(req,res)=>{
+  const sql="select count(re_id) as receptione from reception"
   con.query(sql,(err,result)=>{
     if(err) return res.json({Error:"Error in running query"});
     return res.json(result);
@@ -187,9 +782,9 @@ app.get('receptionCount',(req,res)=>{
 })
 
 
+//API for updating doctor
 
-
-app.get('/get/:id', (req, res) => {
+app.get('/get/doctor/:id', (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM doctor WHERE doctID=?";
   con.query(sql, [id], (err, result) => {
@@ -199,7 +794,9 @@ app.get('/get/:id', (req, res) => {
     return res.json({ Status: "Success", Result: result });
   });
 });
-app.put('/update/:id', (req, res) => {
+
+
+app.put('/update/doctor/:id', (req, res) => {
 
 
   try {
@@ -225,7 +822,7 @@ app.put('/update/:id', (req, res) => {
 
 //Api for deletion
 
-app.delete('/delete/:id',(req,res)=>{
+app.delete('/delete/doctor/:id',(req,res)=>{
  
 
   try {

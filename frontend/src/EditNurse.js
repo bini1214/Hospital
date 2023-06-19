@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-function EditDoctor() {
+function EditNurse() {
 const [data,setData]=useState({
-    doctID:'',
+    nr_id:'',
     fname:'', 
     lname:'',
     address:'',
@@ -14,16 +14,16 @@ const [data,setData]=useState({
 })
 
 
-const navigate=useNavigate();  
+const navigate=useNavigate();
 const {id}=useParams();
 
 
 useEffect(() => {
-  axios.get(`http://localhost:8081/get/doctor/${id}`)
+  axios.get(`http://localhost:8081/get/nurse/${id}`)
     .then(res => {
       setData({
         ...data,
-        doctID: res.data.Result[0].doctID,
+        nr_id: res.data.Result[0].nr_id,
         fname: res.data.Result[0].fname,
         lname: res.data.Result[0].lname,
         address: res.data.Result[0].address,
@@ -47,48 +47,30 @@ const handleSubmit = async (event) => {
   // Update the data state with the decimal salary
   setData({ ...data, salary: decimalSalary });
 
-  axios.put(`http://localhost:8081/update/doctor/${data.doctID}`, data)
+  axios.put(`http://localhost:8081/update/nurse/${data.nr_id}`, data)
     .then(res => {
       if (res.data.Status === "Success") {
-        navigate('/doctor');
+        navigate('/nurse');
       }
     })
     .catch(err => console.log(err));
 };
 
 
-//   try {
-//     const res = await axios.post('http://localhost:8081/update',data {
-//      doctID:data.doctID,
-//       fname:data.fname,
-//       lname:data.lname,
-//       address:data.address,
-//       dept_name:data.dept_name,
-//       salary:data.salary,
-//     });
-//     navigate('/doctor');
-    
-// console.log(res);
-
-//   }
-//    catch (err) {console.log(err);
-//   }
-// };
-
 
 return (
     <div className='d-flex flex-column align-items-center pt-4'>
-      <h2>Update Doctor</h2>
+      <h2>Update Nurse</h2>
       <form className='row g-3 w-50' onSubmit={handleSubmit}>
         <div className='col-12'>
-          <label htmlFor="doctID" className='form-label'>ID</label>
+          <label htmlFor="nr_id" className='form-label'>ID</label>
           <input
             type='text'
             className='form-control'
-            id='doctID'
-            placeholder={data.doctID}
-            onChange={e => setData({ ...data, doctID: e.target.value })}
-            value={data.doctID}
+            id='nr_id'
+            placeholder={data.nr_id}
+            onChange={e => setData({ ...data, nr_id: e.target.value })}
+            value={data.nr_id}
           />
         </div>
         <div className='col-12'>
@@ -96,7 +78,7 @@ return (
           <input
             type='text'
             className='form-control'
-            id='inputFirstName'
+            id='inp'
             placeholder='Enter First Name'
             onChange={e => setData({ ...data, fname: e.target.value })}
             value={data.fname}
@@ -107,7 +89,7 @@ return (
           <input
             type='text'
             className='form-control'
-            id='inputLastName'
+            id='inputLa'
             placeholder='Enter Last Name'
             onChange={e => setData({ ...data, lname: e.target.value })}
             value={data.lname}
@@ -118,7 +100,7 @@ return (
           <input
             type='text'
             className='form-control'
-            id='inputAddress'
+            id='inputs'
             placeholder='City'
             onChange={e => setData({ ...data, address: e.target.value })}
             value={data.address}
@@ -129,7 +111,7 @@ return (
           <input
             type='text'
             className='form-control'
-            id='inputDepart'
+            id='inppt'
             placeholder='Enter Department'
             onChange={e => setData({ ...data, dept_name: e.target.value })}
             value={data.dept_name}
@@ -141,7 +123,7 @@ return (
             type='number'
             step="0.01" 
             className='form-control'
-            id='inputSalary'
+            id='inputry'
             placeholder='Enter per Month Salary'
             onChange={e => setData({ ...data, salary: e.target.value })}
             value={data.salary}
@@ -156,4 +138,4 @@ return (
   
 }
 
-export default EditDoctor
+export default EditNurse

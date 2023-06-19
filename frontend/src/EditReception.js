@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-function EditDoctor() {
+function EditReception() {
 const [data,setData]=useState({
-    doctID:'',
+    re_id:'',
     fname:'', 
     lname:'',
     address:'',
-    dept_name:'',
     salary:0
 })
 
@@ -19,15 +18,14 @@ const {id}=useParams();
 
 
 useEffect(() => {
-  axios.get(`http://localhost:8081/get/doctor/${id}`)
+  axios.get(`http://localhost:8081/get/reception/${id}`)
     .then(res => {
       setData({
         ...data,
-        doctID: res.data.Result[0].doctID,
+        re_id: res.data.Result[0].re_id,
         fname: res.data.Result[0].fname,
         lname: res.data.Result[0].lname,
         address: res.data.Result[0].address,
-        dept_name: res.data.Result[0].dept_name,
         salary: res.data.Result[0].salary,
         
       });
@@ -47,101 +45,74 @@ const handleSubmit = async (event) => {
   // Update the data state with the decimal salary
   setData({ ...data, salary: decimalSalary });
 
-  axios.put(`http://localhost:8081/update/doctor/${data.doctID}`, data)
+  axios.put(`http://localhost:8081/update/reception/${data.re_id}`, data)
     .then(res => {
       if (res.data.Status === "Success") {
-        navigate('/doctor');
+        navigate('/reception');
       }
     })
     .catch(err => console.log(err));
 };
 
 
-//   try {
-//     const res = await axios.post('http://localhost:8081/update',data {
-//      doctID:data.doctID,
-//       fname:data.fname,
-//       lname:data.lname,
-//       address:data.address,
-//       dept_name:data.dept_name,
-//       salary:data.salary,
-//     });
-//     navigate('/doctor');
-    
-// console.log(res);
-
-//   }
-//    catch (err) {console.log(err);
-//   }
-// };
 
 
 return (
     <div className='d-flex flex-column align-items-center pt-4'>
-      <h2>Update Doctor</h2>
+      <h2>Update Reception</h2>
       <form className='row g-3 w-50' onSubmit={handleSubmit}>
         <div className='col-12'>
-          <label htmlFor="doctID" className='form-label'>ID</label>
+          <label htmlFor="re_id" className='form-label'>ID</label>
           <input
             type='text'
             className='form-control'
-            id='doctID'
-            placeholder={data.doctID}
-            onChange={e => setData({ ...data, doctID: e.target.value })}
-            value={data.doctID}
+            id='re_id'
+            placeholder={data.re_id}
+            onChange={e => setData({ ...data, re_id: e.target.value })}
+            value={data.re_id}
           />
         </div>
         <div className='col-12'>
-          <label htmlFor="inputFirstName" className='form-label'>First Name</label>
+          <label htmlFor="inirstName" className='form-label'>First Name</label>
           <input
             type='text'
             className='form-control'
-            id='inputFirstName'
+            id='inirstName'
             placeholder='Enter First Name'
             onChange={e => setData({ ...data, fname: e.target.value })}
             value={data.fname}
           />
         </div>
         <div className='col-12'>
-          <label htmlFor="inputLastName" className='form-label'>Last Name</label>
+          <label htmlFor="putLastName" className='form-label'>Last Name</label>
           <input
             type='text'
             className='form-control'
-            id='inputLastName'
+            id='putLastName'
             placeholder='Enter Last Name'
             onChange={e => setData({ ...data, lname: e.target.value })}
             value={data.lname}
           />
         </div>
         <div className='col-12'>
-          <label htmlFor="inputAddress" className='form-label'>Address</label>
+          <label htmlFor="utAddress" className='form-label'>Address</label>
           <input
             type='text'
             className='form-control'
-            id='inputAddress'
+            id='utAddress'
             placeholder='City'
             onChange={e => setData({ ...data, address: e.target.value })}
             value={data.address}
           />
         </div>
+        
         <div className='col-12'>
-          <label htmlFor="inputDepart" className='form-label'>Department</label>
-          <input
-            type='text'
-            className='form-control'
-            id='inputDepart'
-            placeholder='Enter Department'
-            onChange={e => setData({ ...data, dept_name: e.target.value })}
-            value={data.dept_name}
-          />
-        </div>
-        <div className='col-12'>
-          <label htmlFor="inputSalary" className='form-label'>Salary</label>
+          <label htmlFor="inputSala" className='form-label'>Salary</label>
           <input
             type='number'
             step="0.01" 
             className='form-control'
-            id='inputSalary'
+            id='inputSala'
             placeholder='Enter per Month Salary'
             onChange={e => setData({ ...data, salary: e.target.value })}
             value={data.salary}
@@ -149,11 +120,11 @@ return (
         </div>
         <div className='col-12 mb-3'>
           <button type='submit' className='btn btn-primary'>Update</button>
-        </div>
+        </div> 
       </form>
     </div>
   );
   
 }
 
-export default EditDoctor
+export default EditReception

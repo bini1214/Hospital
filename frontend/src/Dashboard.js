@@ -17,7 +17,7 @@ axios.get('http://localhost:8081/dashboard')
 
   }
   else{
-    navigate('/login')
+    navigate('/start')
   }
 })}
 
@@ -26,7 +26,7 @@ axios.get('http://localhost:8081/dashboard')
 const handleLogout=()=>{
   axios.get('http://localhost:8081/logout') 
   .then(res=>{
-    navigate('/')
+    navigate('/start')
   })
   .catch(err=>console.log(err));
 
@@ -47,7 +47,7 @@ const handleLogout=()=>{
                 </Link>
               </li>
               <li>
-                <Link to="/home" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
+                <Link to="/dash" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                   <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Dashboard</span>
                 </Link>
               </li>
@@ -76,11 +76,7 @@ const handleLogout=()=>{
                   <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Nurse</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/profiles" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Profile</span>
-                </Link>
-              </li>
+              
               <li li onClick={handleLogout}>
                
                 <a href="#" className="nav-link px-0 align-middle text-white">
