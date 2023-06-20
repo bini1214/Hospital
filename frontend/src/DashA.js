@@ -52,31 +52,15 @@ const handleLogout=()=>{
                 </Link>
               </li>
               <li>
-                <Link to="/department" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Department</span>
+                <Link to="appointment" className="nav-link px-0 align-middle">
+                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Appointment</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/doctor" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Doctor</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/reception" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Reception</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/triage" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Triage</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/nurse" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Nurse</span>
-                </Link>
-              </li>
+             
               
+              
+             
+          
               <li li onClick={handleLogout}>
                
                 <a href="#" className="nav-link px-0 align-middle text-white">

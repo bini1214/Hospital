@@ -376,6 +376,117 @@ app.get('/dashD',verifyUser,(req,res)=>{
 
 })
 
+app.post('/createPatient', async (req, res) => {
+  const sql = "INSERT INTO patient (`p_id`, `fname`, `lname`, `address`, `DOB`) VALUES (?, ?, ?, ?, ?)";
+
+  const saltRounds = 10; // Define the number of salt rounds
+
+  try {
+    // const salt = await bcrypt.genSalt(saltRounds);
+    // const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    const values = [
+      req.body.p_id,
+      req.body.fname,
+      req.body.lname,
+      req.body.address,
+      req.body.DOB,
+    ];
+
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in hashing password" });
+  }
+});
+
+app.get('/getPatient', (req, res) => {
+  const sql = "SELECT * FROM patient";
+
+  con.query(sql, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.json({ Error: "Error in SQL query" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
+
+
+  //API for updating patient by reception
+
+
+
+// app.get('/get/patient/:id', (req, res) => {
+//   const id = req.params.id;
+//   const sql = "SELECT * FROM patient WHERE p_id=?";
+//   con.query(sql, [id], (err, result) => {
+//     if (err) {
+//       return res.json({ Error: "get nurse error in sql" });
+//     }
+//     return res.json({ Status: "Success", Result: result });
+//   });
+// });
+// app.put('/update/patient/:id', (req, res) => {
+
+
+//   try {
+    
+//     //const decimalSalary = parseFloat(req.body.salary);
+ 
+  
+//     //let values=[decimalSalary,req.params.id];
+//     console.log(values);
+//     const sql = "UPDATE nurse SET DOB=? WHERE p_id=?";
+//     con.query(sql, values, (err, result) => {
+//       if (err) {
+//         return res.json({ Error: "update patient error in sql" });
+//       }
+//       return res.json({ Status: "Success" });
+//     });
+//   } catch (error) {
+//     console.log(error)
+    
+//   }
+// });
+
+
+//Api for deletion of nurse by admin
+
+// app.delete('/delete/patient/:id',(req,res)=>{
+ 
+
+//   try {
+    
+    
+ 
+  
+//     let values=[req.params.id];
+//     console.log(values);
+//     const sql = "DELETE FROM nurse WHERE p_id=?";
+//     con.query(sql, values, (err, result) => {
+//       if (err) {
+//         return res.json({ Error: "delete patient error in sql" });
+//       }
+//       return res.json({ Status: "Success" });
+//     });
+//   } catch (error) {
+//     console.log(error)
+    
+//   }
+
+
+// })
+
+
+
 
 
 
