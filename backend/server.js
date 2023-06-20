@@ -145,7 +145,7 @@ app.post('/triageLogin', (req, res) => {
         }
         if (response) {
           const id = result[0].id;
-          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '1d' });
+          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '7d' });
 
           res.cookie('token', token);
 
@@ -178,7 +178,7 @@ app.post('/receptionLogin', (req, res) => {
         }
         if (response) {
           const id = result[0].id;
-          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '1d' });
+          const token = Jwt.sign({ id }, "jwt-secret-key", { expiresIn: '7d' });
 
           res.cookie('token', token);
 
@@ -230,6 +230,158 @@ app.get('/dashboard',verifyUser,(req,res)=>{
 
 
 })
+
+
+
+
+//API for logout of reception
+app.get('/logouT',(req,res)=>{
+
+  res.clearCookie('token');
+  return res.json({Status:"Success"});
+})
+
+//for Authorization of reception
+
+ const verifyTheUser=(req,res,next)=>{
+  //attention
+  const token=req.cookies.token;
+  //attention
+  if(!token){
+    return res.json({Error:"You are not Authenticated"});
+  }
+  else
+  {
+Jwt.verify(token,"jwt-secret-key",(err,decoded)=>{
+  if(err) return res.json({Error:"Token wrong"});
+  next();
+})
+  }
+}
+
+app.get('/dashB',verifyUser,(req,res)=>{
+
+  return res.json({Status:"Success"})
+
+
+})
+
+
+//for logout of doctor
+
+//API for logout
+app.get('/logouP',(req,res)=>{
+
+  res.clearCookie('token');
+  return res.json({Status:"Success"});
+})
+
+
+
+//for authorization of doctor
+
+const verifyTUser=(req,res,next)=>{
+  //attention
+  const token=req.cookies.token;
+  //attention
+  if(!token){
+    return res.json({Error:"You are not Authenticated"});
+  }
+  else
+  {
+Jwt.verify(token,"jwt-secret-key",(err,decoded)=>{
+  if(err) return res.json({Error:"Token wrong"});
+  next();
+})
+  }
+}
+
+app.get('/dashA',verifyUser,(req,res)=>{
+
+  return res.json({Status:"Success"})
+
+
+})
+
+
+//for logout of triage
+
+//API for logout
+app.get('/logouQ',(req,res)=>{
+
+  res.clearCookie('token');
+  return res.json({Status:"Success"});
+})
+
+
+//for Authorization of triage
+
+const verifyHeUser=(req,res,next)=>{
+  //attention
+  const token=req.cookies.token;
+  //attention
+  if(!token){
+    return res.json({Error:"You are not Authenticated"});
+  }
+  else
+  {
+Jwt.verify(token,"jwt-secret-key",(err,decoded)=>{
+  if(err) return res.json({Error:"Token wrong"});
+  next();
+})
+  }
+}
+
+app.get('/dashC',verifyUser,(req,res)=>{
+
+  return res.json({Status:"Success"})
+
+
+})
+
+//for log in of nurse
+
+//API for logout
+app.get('/logouR',(req,res)=>{
+
+  res.clearCookie('token');
+  return res.json({Status:"Success"});
+})
+
+
+
+//for Authorization of nurse
+
+
+const verifyEUser=(req,res,next)=>{
+  //attention
+  const token=req.cookies.token;
+  //attention
+  if(!token){
+    return res.json({Error:"You are not Authenticated"});
+  }
+  else
+  {
+Jwt.verify(token,"jwt-secret-key",(err,decoded)=>{
+  if(err) return res.json({Error:"Token wrong"});
+  next();
+})
+  }
+}
+
+app.get('/dashD',verifyUser,(req,res)=>{
+
+  return res.json({Status:"Success"})
+
+
+})
+
+
+
+
+
+
+
 
 
 
@@ -846,6 +998,29 @@ app.delete('/delete/doctor/:id',(req,res)=>{
 
 
 })
+
+
+
+
+
+// ------------------RECEPTION----------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 

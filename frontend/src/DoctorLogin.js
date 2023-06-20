@@ -19,7 +19,7 @@ function DoctorLogin() {
     axios.post('http://localhost:8081/doctorLogin', values)
       .then((res) => {
         if (res.data.Status === 'Success') {
-          navigate('/doctorDetail');
+          navigate('/dashA/doctorDetail');
         } else {
           setError(res.data.Error);
         }

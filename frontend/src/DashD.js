@@ -3,14 +3,14 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
  
-function Dashboard() {
+function DashD() {
   const navigate=useNavigate() 
   axios.defaults.withCredentials=true;
  
 useEffect(()=>{
 
   
-axios.get('http://localhost:8081/dashboard')
+axios.get('http://localhost:8081/dashD')
 .then(res=>{
   if(res.data.Status==="Success")
   {
@@ -24,7 +24,7 @@ axios.get('http://localhost:8081/dashboard')
 ,[])
 
 const handleLogout=()=>{
-  axios.get('http://localhost:8081/logout') 
+  axios.get('http://localhost:8081/logouR') 
   .then(res=>{
     navigate('/start')
   })
@@ -42,12 +42,12 @@ const handleLogout=()=>{
             </a>
             <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
               <li className="nav-item">
-                <Link to=" " className="nav-link align-middle px-0">
+                <Link to="/" className="nav-link align-middle px-0">
                   <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline">Home</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dash" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
+                <Link to="daD" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                   <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Dashboard</span>
                 </Link>
               </li>
@@ -97,4 +97,4 @@ const handleLogout=()=>{
   );
 }
 
-export default Dashboard;
+export default DashD;

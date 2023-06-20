@@ -3,18 +3,18 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios';
  
-function Dashboard() {
+function DashC() {
   const navigate=useNavigate() 
   axios.defaults.withCredentials=true;
  
-useEffect(()=>{
+useEffect(()=>{  
 
   
-axios.get('http://localhost:8081/dashboard')
+axios.get('http://localhost:8081/dashC')
 .then(res=>{
   if(res.data.Status==="Success")
   {
-
+ 
   }
   else{
     navigate('/start')
@@ -24,7 +24,7 @@ axios.get('http://localhost:8081/dashboard')
 ,[])
 
 const handleLogout=()=>{
-  axios.get('http://localhost:8081/logout') 
+  axios.get('http://localhost:8081/logouQ') 
   .then(res=>{
     navigate('/start')
   })
@@ -42,40 +42,22 @@ const handleLogout=()=>{
             </a>
             <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
               <li className="nav-item">
-                <Link to=" " className="nav-link align-middle px-0">
+                <Link to="/" className="nav-link align-middle px-0">
                   <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline">Home</span>
                 </Link>
               </li>
               <li>
-                <Link to="/dash" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
+                <Link to="daC" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
                   <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Dashboard</span>
                 </Link>
               </li>
+              
               <li>
-                <Link to="/department" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Department</span>
+                <Link to="assign" className="nav-link px-0 align-middle">
+                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Doctor Assign</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/doctor" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Doctor</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/reception" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Reception</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/triage" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Triage</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="/nurse" className="nav-link px-0 align-middle">
-                  <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Nurse</span>
-                </Link>
-              </li>
+              
               
               <li li onClick={handleLogout}>
                
@@ -97,4 +79,4 @@ const handleLogout=()=>{
   );
 }
 
-export default Dashboard;
+export default DashC;

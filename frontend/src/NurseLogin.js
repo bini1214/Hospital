@@ -19,7 +19,7 @@ function NurseLogin() {
     axios.post('http://localhost:8081/nurseLogin', values)
       .then((res) => {
         if (res.data.Status === 'Success') {
-          navigate('/nurseDetail');
+          navigate('/dashD/nurseDetail');
         } else {
           setError(res.data.Error);
         }

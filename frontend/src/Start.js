@@ -27,7 +27,7 @@ const navigate=useNavigate();
 
             <div className='d-flex justify-content-between mt-4'>
                 <button className='btn btn-primary btn-lg'onClick={e=>navigate('/triageLogin')}>Triage</button>
-                <button className='btn btn-success btn-lg' onClick={e=>navigate('/login')}>Reception</button>
+                <button className='btn btn-success btn-lg' onClick={e=>navigate('/receptionLogin')}>Reception</button>
             </div>
 
            

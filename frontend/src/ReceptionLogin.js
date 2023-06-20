@@ -19,7 +19,7 @@ function ReceptionLogin() {
     axios.post('http://localhost:8081/receptionLogin', values)
       .then((res) => {
         if (res.data.Status === 'Success') {
-          navigate('/receptionDetail');
+          navigate('/dashB/receptionDetail');
         } else {
           setError(res.data.Error);
         }

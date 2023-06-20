@@ -19,7 +19,7 @@ function TriageLogin() {
     axios.post('http://localhost:8081/triageLogin', values)
       .then((res) => {
         if (res.data.Status === 'Success') {
-          navigate('/triageDetail');
+          navigate('/dashC/triageDetail');
         } else {
           setError(res.data.Error);
         }
