@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import Doctor from './doctor/Doctor';
+import Doctor from './Doctor';
 import { useNavigate } from 'react-router-dom';
 // import multer from 
 

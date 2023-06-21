@@ -9,7 +9,7 @@ const [data,setData]=useState({
     p_id:'',
     fname:'',
     lname:'',
-    address:'',
+    address:'', 
     DOB:''
    
 })
@@ -21,7 +21,7 @@ const handleSubmit = async (event) => {
 
   const formData = new FormData();
   formData.append("p_id", data.p_id);
-  formData.append("fname", data.fname);
+  formData.append("fname", data.fname); 
   formData.append("lname", data.lname);
   formData.append("address", data.address);
   formData.append("dept_name", data.DOB);
@@ -41,7 +41,7 @@ const handleSubmit = async (event) => {
       DOB:data.DOB,
     
     });
-    navigate('patient');
+    navigate('/dashB/patient');
     
 
     

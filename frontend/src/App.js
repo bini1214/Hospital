@@ -4,7 +4,7 @@ import Login from "./Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Dashboard";
 
-import Doctor from "./doctor/Doctor";
+import Doctor from "./Doctor";
 
 import Reception from "./Reception";
 import Triage from "./Triage";
@@ -42,12 +42,16 @@ import DashBB from "./DashBB";
 import DashCC from "./DashCC";
 import DashDD from "./DashDD";
 import Payment from "./Payment";
-import Assign from "./Assign";
 import Appointment from "./Appointment";
 import Test from "./Test";
 import Bed from "./Bed";
 import AddPatient from "./AddPatient";
 import EditPatient from "./EditPatient";
+import AddPayment from "./AddPayment";
+import EditPayment from "./EditPayment";
+import AddAssign from "./AddAssign";
+import EditAssign from "./EditAssign";
+import Assign from "./Assign";
 
 function App() {
   return (
@@ -89,38 +93,74 @@ function App() {
           <Route path="appointment" element={<Appointment />}></Route>
         </Route>
 
+
+
+
+
+
         {/* for Reception Authorization */}
         <Route path="/dashB" exact element={<DashB />}>
   <Route path="daB" element={<DashBB />} />
   <Route path="receptionDetail" element={<ReceptionDetail />} />
   <Route path="payment" element={<Payment />} />
 
-  <Route path="patient" element={<Patient />}>
-    <Route path="createPatient" exact element={<AddPatient />} />
-  </Route>
+  <Route path="createPayment" element={<AddPayment />}></Route>
+  {/* <Route path="paymentEdit/:bi_id/:p_id" element={<EditPayment />}></Route> */}
+  <Route path="createPatient" exact element={<AddPatient />} />
 
-  <Route path="patientEdit/:id" element={<EditPatient />} />
+  <Route path="patient" element={<Patient />}>
+
+   
+
+  </Route>
+  <Route path="createPatient" exact element={<AddPatient />} />
+  <Route path="patient" exact element={<Patient />} />
+
+  <Route path="paymentEdit/:id/:pay_id" element={<EditPayment />} />
 </Route>
 
         
+
+
+
       
 
         {/* for triage Authorization */}
 
         <Route path="/dashC" element={<DashC />}>
           <Route path="daC" element={<DashCC />}></Route>
+
+          <Route path="createAssign" element={<AddAssign />}></Route>
           <Route path="triageDetail" element={<triageDetail />}></Route>
-          <Route path="assign" element={<Assign />}></Route>
+          <Route path="assign" element={<Assign/>}></Route>
+          <Route path="assignEdit/:id" element={<EditAssign/>}></Route>
         </Route>
+
+
+
+
+
+
+
 
         {/* for Nurse Authorization */}
 
         <Route path="/dashD" element={<DashD />}>
           <Route path="daD" element={<DashDD />}></Route>
+          
           <Route path="nurseDetail" element={<nurseDetail />}></Route>
           <Route path="test" element={<Test />}></Route>
           <Route path="bed" element={<Bed />}></Route>
         </Route>
+
+
+
+
+
+
+
+
+
 
         <Route path="/login" element={<Login />}></Route>
         <Route path="/start" element={<Start />}></Route>

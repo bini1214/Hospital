@@ -46,7 +46,7 @@ window.location.reload(true);
       <div className='d-flex justify-content-center'>
         <h3>Patient List</h3>
       </div>
-      <Link to="createPatient" className='btn btn-success'>Add Patient</Link>
+      <Link to="/dashB/createPatient" className='btn btn-success'>Add Patient</Link>
       <div className='mt-3'>
       <table className='table'>
         <thead>
@@ -56,7 +56,7 @@ window.location.reload(true);
             <th>Last Name</th>
             <th>City</th>
             <th>DOB</th>
-            <th>Action</th>
+           
           </tr>
         </thead>
         <tbody>
@@ -69,10 +69,7 @@ return <tr key={index}>
   <td>{patient.lname}</td>
   <td>{patient.address}</td>
  <td>{patient.DOB}</td>
-  <td>
-    <Link to={`patientEdit/${patient.p_id}`} className='btn btn-primary btn-sm me-2'>edit</Link>
-    <button onClick={e=>handleDelete(patient.p_id)} className='btn btn-sm btn-danger'>delete</button>
-  </td>
+ 
 
 </tr>
 

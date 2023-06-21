@@ -376,6 +376,10 @@ app.get('/dashD',verifyUser,(req,res)=>{
 
 })
 
+
+
+//insertion of patient by reception
+
 app.post('/createPatient', async (req, res) => {
   const sql = "INSERT INTO patient (`p_id`, `fname`, `lname`, `address`, `DOB`) VALUES (?, ?, ?, ?, ?)";
 
@@ -485,6 +489,172 @@ app.get('/getPatient', (req, res) => {
 
 // })
 
+
+
+//-----------------------------|||||||||||||||||||||||||||||||||||||||||--------------------------------------------
+
+// Inserting payment to table by reception
+app.post('/createPayment', async (req, res) => {
+  const sql = "INSERT INTO payment (`bi_id`, `p_id`, `reason`, `amount`) VALUES (?, ?, ?, ?)";
+
+  try {
+    const values = [
+      req.body.bi_id,
+      req.body.p_id,
+      req.body.reason,
+      req.body.amount,
+    ];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in inserting payment" });
+  }
+});
+
+app.get('/getPayment', (req, res) => {
+  const sql = "SELECT * FROM payment";
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Error: "get payment error in SQL" });
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
+app.get('/get/payment/:bi_id/:p_id', (req, res) => {
+  const { bi_id, p_id } = req.params;
+  const sql = "SELECT * FROM payment WHERE bi_id = ? AND p_id = ?";
+  con.query(sql, [bi_id, p_id], (err, result) => {
+    if (err) {
+      return res.json({ Error: "get payment error in SQL" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
+app.put('/update/payment/:bi_id/:p_id', (req, res) => {
+  try {
+    const decimalAmount = parseFloat(req.body.amount);
+    const values = [decimalAmount, req.params.bi_id, req.params.p_id];
+    const sql = "UPDATE payment SET amount=? WHERE bi_id=? AND p_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "update payment error in SQL" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ Error: "An error occurred during payment update" });
+  }
+});
+
+
+
+app.delete('/delete/payment/:bi_id/:p_id', (req, res) => {
+  try {
+    const { bi_id, p_id } = req.params;
+    const sql = "DELETE FROM payment WHERE bi_id=? AND p_id=?";
+    con.query(sql, [bi_id, p_id], (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete payment error in SQL" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ Error: "An error occurred during payment deletion" });
+  }
+});
+
+
+
+
+
+
+//-----------------------------|||||||||||||||||||||||||||||||||||||||||--------------------------------------------
+
+// Inserting assign to table by triage
+app.post('/createAssign', async (req, res) => {
+  const sql = "INSERT INTO assign (`p_id`, `doctID`, `nr_id`) VALUES (?, ?, ?)";
+
+  try {
+    const values = [
+      req.body.p_id,
+      req.body.doctID,
+      req.body.nr_id,
+      
+    ];
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.json({ Error: "Error in signup query" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Error: "Error in inserting payment" });
+  }
+});
+
+app.get('/getAssign', (req, res) => {
+  const sql = "SELECT * FROM assign";
+  con.query(sql, (err, result) => {
+    if (err) return res.json({ Error: "get payment error in SQL" });
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
+app.get('/get/assign/:p_id/:doctID/:nr_id', (req, res) => {
+  const {p_id,doctID,nr_id } = req.params;
+  const sql = "SELECT * FROM assign WHERE p_id = ? AND doctID = ? and nr_id";
+  con.query(sql, [p_id, doctID,nr_id], (err, result) => {
+    if (err) {
+      return res.json({ Error: "get payment error in SQL" });
+    }
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
+app.put('/update/assign/:p_id/:doctID/:nr_id', (req, res) => {
+  try {
+    //const decimalAmount = parseFloat(req.body.amount);
+    //const values = [decimalAmount, req.params.bi_id, req.params.p_id];
+    const sql = "UPDATE assign SET amount=? WHERE p_id=? AND doctID=? and nr_id=?";
+    con.query(sql, values, (err, result) => {
+      if (err) {
+        return res.json({ Error: "update payment error in SQL" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ Error: "An error occurred during payment update" });
+  }
+});
+
+
+
+app.delete('/delete/assign/:p_id/:doctID/:nr_id', (req, res) => {
+  try {
+    const { p_id, doctID,nr_id } = req.params;
+    const sql = "DELETE FROM assign WHERE p_id=? AND doctID=? and nr_id=?";
+    con.query(sql, [p_id, doctID,nr_id], (err, result) => {
+      if (err) {
+        return res.json({ Error: "delete payment error in SQL" });
+      }
+      return res.json({ Status: "Success" });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ Error: "An error occurred during payment deletion" });
+  }
+});
 
 
 
