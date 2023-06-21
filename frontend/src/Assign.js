@@ -48,18 +48,21 @@ function Assign() {
               <th>Patient_ID</th>
               <th>Doctor_ID</th>
               <th>Nurse_ID</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
           <tbody>
             {/* Render the data here */}
             {data.map(assign => (
+              console.log(assign),
               <tr key={assign.p_id}>
+                <td>{assign.p_id}</td>
+
                 <td>{assign.doctID}</td>
                 <td>{assign.nr_id}</td>
                 <td>
-                  <Link to={`/dashC/assignEdit/${assign.p_id}/${assign.doctID}/${assign.nr_id}`} className='btn btn-primary btn-sm me-2'>edit</Link>
-                  <button onClick={() => handleDelete(assign.p_id, assign.doctID,assign.nr_id)} className='btn btn-sm btn-danger'>delete</button>
+                  {/* <Link to={`/dashC/assignEdit/${assign.p_id}/${assign.doctID}/${assign.nr_id}`} className='btn btn-primary btn-sm me-2'>edit</Link>
+                  <button onClick={() => handleDelete(assign.p_id, assign.doctID,assign.nr_id)} className='btn btn-sm btn-danger'>delete</button> */}
                 </td>
               </tr>
             ))}
