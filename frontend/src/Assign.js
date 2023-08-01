@@ -55,7 +55,7 @@ function Assign() {
             {/* Render the data here */}
             {data.map(assign => (
               console.log(assign),
-              <tr key={assign.p_id}>
+              <tr key={assign.p_id}> 
                 <td>{assign.p_id}</td>
 
                 <td>{assign.doctID}</td>
